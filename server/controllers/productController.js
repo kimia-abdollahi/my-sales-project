@@ -1,52 +1,99 @@
+
 const Product = require('../models/productModel');
-const Log = require('../models/logModel');
 
 const createProduct = async (req, res) => {
+  const { name, price, category, createdBy } = req.body;
+
   try {
-    const newProduct = new Product(req.body);
-    await newProduct.save();
+    const existingProduct = await Product.findOne({ name });
+    if (existingProduct) {
+      return res.status(400).json({ message: 'Product with this name already exists' });
+    }
 
-    const log = new Log({
-      action: 'create',
-      entityType: 'Product',
-      entityId: newProduct._id,
-      createdBy: req.body.createdBy,
-      details: `Product ${newProduct.name} created.`,
+    const newProduct = new Product({
+      name,
+      price,
+      category,
+      createdBy,
+      logs: [
+        {
+          action: 'create',
+          entityType: 'Product',
+          createdBy,
+          details: `Product ${name} created.`,
+        },
+      ],
     });
-    await log.save();
 
+    await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {
-    res.status(500).json({ message: 'Error creating product', error: err.message });
+    res.status(500).json({ message: 'Error creating product', error: err });
   }
 };
 
-const deleteProduct = async (req, res) => {
+
+const updateProduct = async (req, res) => {
+  const { productId } = req.params;
+  const updateData = req.body;
+
   try {
-    const { id } = req.params;
-    const product = await Product.findByIdAndUpdate(
-      id,
-      { status: 'deleted' },
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      { $set: updateData, $push: { logs: { ...req.body.logData, action: 'update', createdAt: new Date() } } },
       { new: true }
     );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating product', error: err });
+  }
+};
+
+const getProduct = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const product = await Product.findById(productId);
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    const log = new Log({
-      action: 'delete',
-      entityType: 'Product',
-      entityId: id,
-      createdBy: req.body.createdBy,
-      details: `Product ${product.name} soft deleted.`,
-    });
-    await log.save();
-
     res.status(200).json(product);
   } catch (err) {
-    res.status(500).json({ message: 'Error deleting product', error: err.message });
+    res.status(500).json({ message: 'Error fetching product', error: err });
   }
 };
 
-module.exports = { createProduct, deleteProduct };
+const getProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching products', error: err });
+  }
+};
+
+
+const deleteProduct = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(productId);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting product', error: err });
+  }
+};
+
+module.exports = { createProduct, updateProduct, getProduct, deleteProduct, getProducts }; 

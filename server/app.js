@@ -1,7 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
-const logRoutes = require('./routes/logRoutes');
+const categoryRoutes = require('./routes/categoryroutes');
 
 require('dotenv').config();
 
@@ -11,9 +11,8 @@ connectDB();
 
 app.use(express.json());
 
-
-app.use('/api', productRoutes);
-app.use('/api', logRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/categories', categoryRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
