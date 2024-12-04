@@ -1,7 +1,7 @@
 const Category = require('../models/categoryModel');
 
 const createCategory = async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, parentId } = req.body; 
 
   try {
     const existingCategory = await Category.findOne({ name });
@@ -9,7 +9,7 @@ const createCategory = async (req, res) => {
       return res.status(400).json({ message: 'Category already exists' });
     }
 
-    const newCategory = new Category({ name, description });
+    const newCategory = new Category({ name, description, parentId }); // اضافه کردن parentId
     await newCategory.save();
     res.status(201).json(newCategory);
   } catch (err) {
