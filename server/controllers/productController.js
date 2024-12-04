@@ -3,7 +3,10 @@ const Product = require('../models/productModel');
 
 const createProduct = async (req, res) => {
   const { name, price, category, createdBy } = req.body;
-
+  if (!createdBy) {
+    return res.status(400).json({ message: 'Field `createdBy` is required' });
+  }
+  
   try {
     const existingProduct = await Product.findOne({ name });
     if (existingProduct) {
@@ -80,20 +83,49 @@ const getProducts = async (req, res) => {
 };
 
 
+// const deleteProduct = async (req, res) => {
+//   const { productId } = req.params;
+
+//   try {
+//     const deletedProduct = await Product.findByIdAndDelete(productId);
+
+//     if (!deletedProduct) {
+//       return res.status(404).json({ message: 'Product not found' });
+//     }
+
+//     res.status(200).json({ message: 'Product deleted successfully' });
+//   } catch (err) {
+//     res.status(500).json({ message: 'Error deleting product', error: err });
+//   }
+// };
+
+
 const deleteProduct = async (req, res) => {
   const { productId } = req.params;
 
   try {
-    const deletedProduct = await Product.findByIdAndDelete(productId);
+    const product = await Product.findById(productId);
 
-    if (!deletedProduct) {
+    if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    res.status(200).json({ message: 'Product deleted successfully' });
+    product.status = 'deleted';
+    product.logs.push({
+      action: 'delete',
+      entityType: 'Product',
+      createdBy: req.body.createdBy || 'System', 
+      details: `Product ${product.name} marked as deleted.`,
+      createdAt: new Date(),
+    });
+
+    await product.save();
+
+    res.status(200).json({ message: 'Product marked as deleted successfully', product });
   } catch (err) {
     res.status(500).json({ message: 'Error deleting product', error: err });
   }
 };
+
 
 module.exports = { createProduct, updateProduct, getProduct, deleteProduct, getProducts }; 
