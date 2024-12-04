@@ -41,8 +41,8 @@ Request Body:
 {
   "name": "test Product",
   "price": 100,
-  "category": "64b87e0feecf5e3a6c73b123",
-  "createdBy": "User123"
+  "category": "category-id",
+  "createdBy": "test user"
 }
 Response: Returns the newly created product's details.
 
@@ -67,8 +67,8 @@ Request Body:
 {
   "name": "updated test Product",
   "price": 200,
-  "category": "64b87e0feecf5e3a6c73b123",
-  "createdBy": "User123"
+  "category": "category-id",
+  "createdBy": "test user"
 }
 
 Response: Returns the updated product details.
