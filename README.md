@@ -28,59 +28,48 @@ This project is a Product Management API that allows users to create, read, upda
 
 5. Start the server:
     npm start
-    The API should now be accessible at http://localhost:5000.
+    The API should now be accessible at http://localhost:5000
 
 
 API Usage
 1. Create a New Product
 Method: POST
 
-Endpoint: /api/product/
+Endpoint: /api/products/
 
 Request Body:
-    {
-  "name": "Laptop",
-  "description": "High-end gaming laptop",
-  "price": 1500,
-  "category": "605c72ef153207001f83f8f",  // Category ID
-  "attributes": [
-    { "key": "RAM", "value": "16GB" },
-    { "key": "CPU", "value": "Intel i7" }
-  ],
-  "images": ["image1.jpg", "image2.jpg"],
-  "createdBy": "Kimia"
+{
+  "name": "test Product",
+  "price": 100,
+  "category": "64b87e0feecf5e3a6c73b123",
+  "createdBy": "User123"
 }
-
 Response: Returns the newly created product's details.
-
 
 2. Soft Delete a Product
 Method: DELETE
-Endpoint: /api/product/:id
+Endpoint: /api/products/:id
 Response: A confirmation message indicating the product was soft deleted.
 3. Get All Products
 Method: GET
-Endpoint: /api/product/
+Endpoint: /api/products/
 Response: Returns a list of all products.
 4. Get a Single Product
 Method: GET
-Endpoint: /api/product/:id
+Endpoint: /api/products/:id
 Response: Returns details of the product with the given ID.
 5. Update Product Information
 Method: PUT
 
-Endpoint: /api/product/:id
+Endpoint: /api/products/:id
 
 Request Body:
-    {
-    "name": "Updated Laptop",
-    "description": "Updated high-end gaming laptop",
-    "price": 1600,
-    "attributes": [
-        { "key": "RAM", "value": "32GB" },
-        { "key": "CPU", "value": "Intel i9" }
-    ]
-    }
+{
+  "name": "updated test Product",
+  "price": 200,
+  "category": "64b87e0feecf5e3a6c73b123",
+  "createdBy": "User123"
+}
 
 Response: Returns the updated product details.
 
