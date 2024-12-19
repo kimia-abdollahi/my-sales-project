@@ -8,9 +8,19 @@ This project is a Product Management API that allows users to create, read, upda
 
 - Create new products
 - View a list of products
+- View details of a specific product
 - Update product information
 - Soft delete products
 - Log actions for creating, updating, or deleting products
+
+
+### User Management
+- Register new users
+- Log in users with secure JWT authentication
+- View user profile
+- Update user information
+- Admin-only access to delete users
+
 
 ## Installation and Setup
 
@@ -32,6 +42,8 @@ This project is a Product Management API that allows users to create, read, upda
 
 
 API Usage
+
+## Product Management
 1. Create a New Product
 Method: POST
 
@@ -58,11 +70,10 @@ Response: Returns a list of all products.
 Method: GET
 Endpoint: /api/products/:id
 Response: Returns details of the product with the given ID.
+
 5. Update Product Information
 Method: PUT
-
 Endpoint: /api/products/:id
-
 Request Body:
 {
   "name": "updated test Product",
@@ -73,11 +84,56 @@ Request Body:
 
 Response: Returns the updated product details.
 
+## User Management
+
+1. Register a New User
+  Method: POST
+  Endpoint: /api/users/register
+  {
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "password123"
+  }
+Response: Confirmation message for successful registration
+
+2. Log in a User
+  Method: POST
+  Endpoint: /api/users/login
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+Response: Returns a JWT token for authentication.
+
+3. View User Profile
+Method: GET
+  Endpoint: /api/users/profile
+  Headers: Authorization: Bearer <token>
+  Response: Returns the authenticated user's profile.
+
+4. Update User Information
+  Method: PUT
+  Endpoint: /api/users/update
+  Headers: Authorization: Bearer <token>
+  Request Body:
+  {
+    "name": "Updated Name",
+    "email": "updated@example.com"
+  }
+Response: Returns the updated user details.
+
+5. Admin: Delete a User
+  Method: DELETE
+  Endpoint: /api/users/:id
+  Headers: Authorization: Bearer <admin-token>
+  Response: Confirmation message for successful deletion.
+
 
 /node_modules       # Installed dependencies
 /models             # Database models (e.g., productModel.js and logModel.js)
 /controllers        # API controllers
 /routes             # API routes
+/middlewares        # Custom middleware (e.g., authMiddleware.js)
 /server.js          # Server entry point
 /.gitignore         # Files to be ignored by git
 README.md           # Project documentation
