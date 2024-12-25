@@ -5,8 +5,16 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  status: { type: String, enum: ['active', 'deleted'], default: 'active' }, 
+  logs: [
+    {
+      action: { type: String, required: true },
+      performedBy: { type: String, required: true }, 
+      timestamp: { type: Date, default: Date.now },
+    },
+  ],
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  updatedAt: { type: Date, default: Date.now },
 });
 
 userSchema.pre('save', function (next) {
