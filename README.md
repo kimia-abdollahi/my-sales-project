@@ -41,92 +41,215 @@ This project is a Product Management API that allows users to create, read, upda
     The API should now be accessible at http://localhost:5000
 
 
+
 API Usage
 
 ## Product Management
 1. Create a New Product
-Method: POST
-
-Endpoint: /api/products/
-
-Request Body:
-{
-  "name": "test Product",
-  "price": 100,
-  "category": "category-id",
-  "createdBy": "test user"
-}
-Response: Returns the newly created product's details.
+   - **Method**: POST
+   - **Endpoint**: /api/products/
+   - **Headers**:
+     ```json
+     {
+       "Content-Type": "application/json"
+     }
+     ```
+   - **Request Body**:
+     ```json
+     {
+       "name": "test Product",
+       "price": 100,
+       "category": "category-id",
+       "createdBy": "test user"
+     }
+     ```
+   - **Response**: Returns the newly created product's details.
 
 2. Soft Delete a Product
-Method: DELETE
-Endpoint: /api/products/:id
-Response: A confirmation message indicating the product was soft deleted.
+   - **Method**: DELETE
+   - **Endpoint**: /api/products/:id
+   - **Response**: A confirmation message indicating the product was soft deleted.
+
 3. Get All Products
-Method: GET
-Endpoint: /api/products/
-Response: Returns a list of all products.
+   - **Method**: GET
+   - **Endpoint**: /api/products/
+   - **Response**: Returns a list of all products.
+
 4. Get a Single Product
-Method: GET
-Endpoint: /api/products/:id
-Response: Returns details of the product with the given ID.
+   - **Method**: GET
+   - **Endpoint**: /api/products/:id
+   - **Response**: Returns details of the product with the given ID.
 
 5. Update Product Information
-Method: PUT
-Endpoint: /api/products/:id
-Request Body:
-{
-  "name": "updated test Product",
-  "price": 200,
-  "category": "category-id",
-  "createdBy": "test user"
-}
-
-Response: Returns the updated product details.
+   - **Method**: PUT
+   - **Endpoint**: /api/products/:id
+   - **Request Body**:
+     ```json
+     {
+       "name": "updated test Product",
+       "price": 200,
+       "category": "category-id",
+       "createdBy": "test user"
+     }
+     ```
+   - **Response**: Returns the updated product details.
 
 ## User Management
 
 1. Register a New User
-  Method: POST
-  Endpoint: /api/users/register
-  {
-    "name": "Test User",
-    "email": "test@example.com",
-    "password": "password123"
-  }
-Response: Confirmation message for successful registration
+   - **Method**: POST
+   - **Endpoint**: /api/users/register
+   - **Request Body**:
+     ```json
+     {
+       "name": "Test User",
+       "email": "test@example.com",
+       "password": "password123"
+     }
+     ```
+   - **Response**: Confirmation message for successful registration.
 
 2. Log in a User
-  Method: POST
-  Endpoint: /api/users/login
-{
-  "email": "test@example.com",
-  "password": "password123"
-}
-Response: Returns a JWT token for authentication.
+   - **Method**: POST
+   - **Endpoint**: /api/users/login
+   - **Request Body**:
+     ```json
+     {
+       "email": "test@example.com",
+       "password": "password123"
+     }
+     ```
+   - **Response**: Returns a JWT token for authentication.
 
 3. View User Profile
-Method: GET
-  Endpoint: /api/users/profile
-  Headers: Authorization: Bearer <token>
-  Response: Returns the authenticated user's profile.
+   - **Method**: GET
+   - **Endpoint**: /api/users/profile
+   - **Headers**: Authorization: Bearer <token>
+   - **Response**: Returns the authenticated user's profile.
 
 4. Update User Information
-  Method: PUT
-  Endpoint: /api/users/update
-  Headers: Authorization: Bearer <token>
-  Request Body:
-  {
-    "name": "Updated Name",
-    "email": "updated@example.com"
-  }
-Response: Returns the updated user details.
+   - **Method**: PUT
+   - **Endpoint**: /api/users/update
+   - **Headers**: Authorization: Bearer <token>
+   - **Request Body**:
+     ```json
+     {
+       "name": "Updated Name",
+       "email": "updated@example.com"
+     }
+     ```
+   - **Response**: Returns the updated user details.
 
 5. Admin: Delete a User
-  Method: DELETE
-  Endpoint: /api/users/:id
-  Headers: Authorization: Bearer <admin-token>
-  Response: Confirmation message for successful deletion.
+   - **Method**: DELETE
+   - **Endpoint**: /api/users/:id
+   - **Headers**: Authorization: Bearer <admin-token>
+   - **Response**: Confirmation message for successful deletion.
+
+## Category Management
+
+1. Create a New Category
+   - **Method**: POST
+   - **Endpoint**: /api/categories/
+   - **Request Body**:
+     ```json
+     {
+       "name": "New Category",
+       "description": "Category description",
+       "parentId": "parent-category-id"
+     }
+     ```
+   - **Response**: Returns the newly created category's details.
+
+2. Get All Categories
+   - **Method**: GET
+   - **Endpoint**: /api/categories/
+   - **Response**: Returns a list of all categories.
+
+3. Get a Single Category
+   - **Method**: GET
+   - **Endpoint**: /api/categories/:id
+   - **Response**: Returns details of the category with the given ID.
+
+4. Update Category Information
+   - **Method**: PUT
+   - **Endpoint**: /api/categories/:id
+   - **Request Body**:
+     ```json
+     {
+       "name": "Updated Category",
+       "description": "Updated description"
+     }
+     ```
+   - **Response**: Returns the updated category details.
+
+5. Delete a Category
+   - **Method**: DELETE
+   - **Endpoint**: /api/categories/:id
+   - **Response**: A confirmation message indicating the category was deleted.
+
+## Action Management
+
+1. Create a New Action
+   - **Method**: POST
+   - **Endpoint**: /api/actions/create
+   - **Headers**: Authorization: Bearer <admin-token>
+   - **Request Body**:
+     ```json
+     {
+       "name": "New Action",
+       "description": "Action description"
+     }
+     ```
+   - **Response**: Returns the newly created action's details.
+
+2. Get All Actions
+   - **Method**: GET
+   - **Endpoint**: /api/actions/
+   - **Headers**: Authorization: Bearer <token>
+   - **Response**: Returns a list of all actions.
+
+## Privilege Management
+
+1. Create a New Privilege
+   - **Method**: POST
+   - **Endpoint**: /api/privileges/create
+   - **Headers**: Authorization: Bearer <admin-token>
+   - **Request Body**:
+     ```json
+     {
+       "name": "New Privilege",
+       "actions": ["action-id-1", "action-id-2"]
+     }
+     ```
+   - **Response**: Returns the newly created privilege's details.
+
+2. Get All Privileges
+   - **Method**: GET
+   - **Endpoint**: /api/privileges/
+   - **Headers**: Authorization: Bearer <token>
+   - **Response**: Returns a list of all privileges.
+
+## Order Management
+
+1. Create a New Order
+   - **Method**: POST
+   - **Endpoint**: /api/orders/create
+   - **Headers**: Authorization: Bearer <token>
+   - **Request Body**:
+     ```json
+     {
+       "items": ["item1", "item2"],
+       "address": "123 Test Street"
+     }
+     ```
+   - **Response**: Returns the newly created order's details.
+
+2. Get All Orders
+   - **Method**: GET
+   - **Endpoint**: /api/orders/
+   - **Headers**: Authorization: Bearer <token>
+   - **Response**: Returns a list of orders for the authenticated user.
 
 
 /node_modules       # Installed dependencies
@@ -134,7 +257,7 @@ Response: Returns the updated user details.
 /controllers        # API controllers
 /routes             # API routes
 /middlewares        # Custom middleware (e.g., authMiddleware.js)
-/server.js          # Server entry point
+/app.js             # Server entry point
 /.gitignore         # Files to be ignored by git
 README.md           # Project documentation
 
