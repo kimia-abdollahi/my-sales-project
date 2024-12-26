@@ -251,6 +251,134 @@ API Usage
    - **Headers**: Authorization: Bearer <token>
    - **Response**: Returns a list of orders for the authenticated user.
 
+## Business Management
+
+1. Create a New Business
+   - **Method**: POST
+   - **Endpoint**: /api/businesses/
+   - **Headers**:
+     ```json
+     {
+       "Content-Type": "application/json",
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Request Body**:
+     ```json
+     {
+       "name": "Test Business",
+       "description": "This is a test business"
+     }
+     ```
+   - **Response**: Returns the newly created business's details.
+
+2. Get All Businesses
+   - **Method**: GET
+   - **Endpoint**: /api/businesses/
+   - **Headers**:
+     ```json
+     {
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Response**: Returns a list of all businesses.
+
+3. Update Business Information
+   - **Method**: PUT
+   - **Endpoint**: /api/businesses/:id
+   - **Headers**:
+     ```json
+     {
+       "Content-Type": "application/json",
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Request Body**:
+     ```json
+     {
+       "name": "Updated Business",
+       "description": "Updated description"
+     }
+     ```
+   - **Response**: Returns the updated business details.
+
+4. Delete a Business
+   - **Method**: DELETE
+   - **Endpoint**: /api/businesses/:id
+   - **Headers**:
+     ```json
+     {
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Response**: A confirmation message indicating the business was deleted.
+
+## Customer Management
+
+1. Create a New Customer
+   - **Method**: POST
+   - **Endpoint**: /api/customers/
+   - **Headers**:
+     ```json
+     {
+       "Content-Type": "application/json",
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Request Body**:
+     ```json
+     {
+       "name": "Test Customer",
+       "email": "customer@example.com",
+       "phone": "1234567890",
+       "address": "123 Test Street"
+     }
+     ```
+   - **Response**: Returns the newly created customer's details.
+
+2. Get All Customers
+   - **Method**: GET
+   - **Endpoint**: /api/customers/
+   - **Headers**:
+     ```json
+     {
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Response**: Returns a list of all customers.
+
+3. Update Customer Information
+   - **Method**: PUT
+   - **Endpoint**: /api/customers/:id
+   - **Headers**:
+     ```json
+     {
+       "Content-Type": "application/json",
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Request Body**:
+     ```json
+     {
+       "name": "Updated Customer",
+       "email": "updated@example.com",
+       "phone": "0987654321",
+       "address": "456 Updated Street"
+     }
+     ```
+   - **Response**: Returns the updated customer details.
+
+4. Delete a Customer
+   - **Method**: DELETE
+   - **Endpoint**: /api/customers/:id
+   - **Headers**:
+     ```json
+     {
+       "Authorization": "Bearer <your_token>"
+     }
+     ```
+   - **Response**: A confirmation message indicating the customer was deleted.
+
 
 /node_modules       # Installed dependencies
 /models             # Database models (e.g., productModel.js and logModel.js)
